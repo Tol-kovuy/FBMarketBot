@@ -1,0 +1,91 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35431.28
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FBMarketBot", "FBMarketBot\FBMarketBot.csproj", "{A987BF55-276E-41FB-81DC-67616508BA26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.IoC", "FBMarketBot.IoC\FBMarketBot.IoC.csproj", "{C9E072F7-73B0-49E6-8A20-B2D23D22EC81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.Publisher", "FBMarketBot.Publisher\FBMarketBot.Publisher.csproj", "{0C04244D-359C-42D0-9401-1B0D6E2B42DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.BrowserAutomation", "FBMarketBot.BrowserAutomation\FBMarketBot.BrowserAutomation.csproj", "{4EE3A104-BAA7-4528-8032-67BA5716E8EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.Login", "FBMarketBot.Login\FBMarketBot.Login.csproj", "{D7E62099-0A11-4633-B460-5784E7622ADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.Settings", "FBMarketBot.Settings\FBMarketBot.Settings.csproj", "{BE704BFE-5855-4709-B5F7-02633CCCF478}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.Shared", "FBMarketBot.Shared\FBMarketBot.Shared.csproj", "{32E72A97-A6DD-4382-9382-BE0FC07CC063}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.Common", "FBMarketBot.Common\FBMarketBot.Common.csproj", "{373CA40E-667D-461C-A2D6-31506CC9BD05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.CreatingListing", "FBMarketBot.CreatingListing\FBMarketBot.CreatingListing.csproj", "{1AC971C4-D987-4E5B-A31D-8BF2B8C2D71F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.FillingListingForm", "FBmarketBot.FillingListingForm\FBMarketBot.FillingListingForm.csproj", "{B94BE134-33C7-492B-9931-2DE000A8CDFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.ListngDataService", "FBMarketBot.ListngDataService\FBMarketBot.ListngDataService.csproj", "{9DCF30C1-20B2-4826-B9FA-6CDFD242F575}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBMarketBot.GoLogin", "FBMarketBot.GoLogin\FBMarketBot.GoLogin.csproj", "{34AA57C9-0BD9-4CED-B3AF-EAAA3BB19CC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A987BF55-276E-41FB-81DC-67616508BA26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A987BF55-276E-41FB-81DC-67616508BA26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A987BF55-276E-41FB-81DC-67616508BA26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A987BF55-276E-41FB-81DC-67616508BA26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9E072F7-73B0-49E6-8A20-B2D23D22EC81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9E072F7-73B0-49E6-8A20-B2D23D22EC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9E072F7-73B0-49E6-8A20-B2D23D22EC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9E072F7-73B0-49E6-8A20-B2D23D22EC81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C04244D-359C-42D0-9401-1B0D6E2B42DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C04244D-359C-42D0-9401-1B0D6E2B42DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C04244D-359C-42D0-9401-1B0D6E2B42DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C04244D-359C-42D0-9401-1B0D6E2B42DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE3A104-BAA7-4528-8032-67BA5716E8EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE3A104-BAA7-4528-8032-67BA5716E8EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE3A104-BAA7-4528-8032-67BA5716E8EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE3A104-BAA7-4528-8032-67BA5716E8EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7E62099-0A11-4633-B460-5784E7622ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7E62099-0A11-4633-B460-5784E7622ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7E62099-0A11-4633-B460-5784E7622ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7E62099-0A11-4633-B460-5784E7622ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE704BFE-5855-4709-B5F7-02633CCCF478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE704BFE-5855-4709-B5F7-02633CCCF478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE704BFE-5855-4709-B5F7-02633CCCF478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE704BFE-5855-4709-B5F7-02633CCCF478}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32E72A97-A6DD-4382-9382-BE0FC07CC063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32E72A97-A6DD-4382-9382-BE0FC07CC063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32E72A97-A6DD-4382-9382-BE0FC07CC063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32E72A97-A6DD-4382-9382-BE0FC07CC063}.Release|Any CPU.Build.0 = Release|Any CPU
+		{373CA40E-667D-461C-A2D6-31506CC9BD05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{373CA40E-667D-461C-A2D6-31506CC9BD05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{373CA40E-667D-461C-A2D6-31506CC9BD05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{373CA40E-667D-461C-A2D6-31506CC9BD05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AC971C4-D987-4E5B-A31D-8BF2B8C2D71F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC971C4-D987-4E5B-A31D-8BF2B8C2D71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC971C4-D987-4E5B-A31D-8BF2B8C2D71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC971C4-D987-4E5B-A31D-8BF2B8C2D71F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B94BE134-33C7-492B-9931-2DE000A8CDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B94BE134-33C7-492B-9931-2DE000A8CDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B94BE134-33C7-492B-9931-2DE000A8CDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B94BE134-33C7-492B-9931-2DE000A8CDFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DCF30C1-20B2-4826-B9FA-6CDFD242F575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DCF30C1-20B2-4826-B9FA-6CDFD242F575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DCF30C1-20B2-4826-B9FA-6CDFD242F575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DCF30C1-20B2-4826-B9FA-6CDFD242F575}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34AA57C9-0BD9-4CED-B3AF-EAAA3BB19CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34AA57C9-0BD9-4CED-B3AF-EAAA3BB19CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34AA57C9-0BD9-4CED-B3AF-EAAA3BB19CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34AA57C9-0BD9-4CED-B3AF-EAAA3BB19CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2E3E6EE-50FC-4A76-8DF4-923AF3E93083}
+	EndGlobalSection
+EndGlobal
