@@ -82,7 +82,17 @@ namespace FBMarketBot.Settings.Schedule
             {
                 var now = DateTime.Now;
                 var today = now.DayOfWeek;
-                var weekSchedule = GetWeekSchedule();
+                var weekSchedule = GetWeekSchedule()
+                    .Where(s => s.IsActive)
+                    .OrderBy(s =>
+                    {
+                        var daysUntil = ((int)s.Day - (int)today + DaysInWeek) % DaysInWeek;
+                        var targetDate = now.Date.AddDays(daysUntil);
+                        var scheduledTime = targetDate + s.PostingTime;
+
+                        return scheduledTime < now ? TimeSpan.MaxValue : scheduledTime - now;
+                    })
+                    .ToList();
 
                 foreach (var schedule in weekSchedule)
                 {

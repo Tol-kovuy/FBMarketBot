@@ -10,6 +10,7 @@ using FBMarketBot.Settings.Selectors.AccessorSlctrs;
 using FBMarketBot.Settings.Selectors.ListingFormSlctrs;
 using FBMarketBot.Shared;
 using Microsoft.Extensions.Logging;
+using PuppeteerSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -258,7 +259,7 @@ namespace FBMarketBot.FillingListingForm
                 throw new Exception("Price is not setting.");
             }
 
-            var labelElement = await _page.FindElementAsync(_listingFormSelectors.PriceByCssSelector);
+            var labelElement = await _page.WaitForXPathAsync(_listingFormSelectors.PriceByCssSelector);
 
             while (labelElement == null)
             {
@@ -1009,12 +1010,81 @@ namespace FBMarketBot.FillingListingForm
         /// </summary>
         /// <param name="locationNumber">The index used to select the location from a file.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
+        //private async Task AddLocationAsync(string locationNumber)
+        //{
+        //    string locationPath = Path.Combine(Directory.GetCurrentDirectory(), FilePaths.LocationPath);
+        //    var intLocationNumber = int.TryParse(locationNumber, out int number);
+
+        //    if (!intLocationNumber)
+        //    {
+        //        _logger.LogError("Location number not correct: {LocationNumber}", locationNumber);
+        //        return;
+        //    }
+
+        //    string location = null;
+
+        //    if (File.Exists(locationPath))
+        //    {
+        //        string[] locations = File.ReadAllLines(locationPath);
+        //        if (number < 0 || number >= locations.Length)
+        //        {
+        //            _logger.LogError("Location number {LocationNumber} is out of range. Max index: {MaxIndex}", number, locations.Length - 1);
+        //            return;
+        //        }
+        //        location = locations[number];
+        //    }
+
+        //    try
+        //    {
+        //        var inputElement = await _page.WaitForXPathAsync(_listingFormSelectors.LocationByXPath);
+
+        //        while (inputElement == null)
+        //        {
+        //            inputElement = await _page.WaitForXPathAsync(_listingFormSelectors.LocationByXPath);
+        //            await _settings.DelayBetweenActionsAsync();
+        //            _logger.LogInformation($"Selector {_listingFormSelectors.LocationByXPath} is looking for...");
+
+        //            if (inputElement != null)
+        //            {
+        //                _logger.LogInformation($"LocationByXPath selector {_listingFormSelectors.LocationByXPath} found!");
+        //            }
+        //        }
+
+        //        await _settings.DelayBetweenActionsAsync();
+        //        await inputElement.ClickAsync();
+        //        await inputElement.TypeTextLikeHumanAsync(location);
+
+        //        await _settings.DelayBetweenActionsAsync();
+
+        //        var element = await _page.FindElementAsync(_listingFormSelectors.DropDownLocationsByCss);
+
+        //        while (element == null)
+        //        {
+        //            element = await _page.FindElementAsync(_listingFormSelectors.DropDownLocationsByCss);
+        //            await _settings.DelayBetweenActionsAsync();
+        //            _logger.LogInformation($"Selector {_listingFormSelectors.DropDownLocationsByCss} is looking for...");
+
+        //            if (element != null)
+        //            {
+        //                _logger.LogInformation($"DropDownLocationsByCss selector {_listingFormSelectors.DropDownLocationsByCss} found!");
+        //            }
+        //        }
+
+        //        await _settings.DelayBetweenActionsAsync();
+        //        await element.ClickAsync();
+        //        _logger.LogInformation($"Location {location} was selected.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message);
+        //    }
+        //}
+
         private async Task AddLocationAsync(string locationNumber)
         {
             string locationPath = Path.Combine(Directory.GetCurrentDirectory(), FilePaths.LocationPath);
-            var intLocationNumber = int.TryParse(locationNumber, out int number);
 
-            if (!intLocationNumber)
+            if (!int.TryParse(locationNumber, out int number))
             {
                 _logger.LogError("Location number not correct: {LocationNumber}", locationNumber);
                 return;
@@ -1024,7 +1094,7 @@ namespace FBMarketBot.FillingListingForm
 
             if (File.Exists(locationPath))
             {
-                string[] locations = File.ReadAllLines(locationPath);
+                var locations = File.ReadAllLines(locationPath);
                 if (number < 0 || number >= locations.Length)
                 {
                     _logger.LogError("Location number {LocationNumber} is out of range. Max index: {MaxIndex}", number, locations.Length - 1);
@@ -1036,46 +1106,48 @@ namespace FBMarketBot.FillingListingForm
             try
             {
                 var inputElement = await _page.WaitForXPathAsync(_listingFormSelectors.LocationByXPath);
-
-                while (inputElement == null)
+                if (inputElement == null)
                 {
-                    inputElement = await _page.WaitForXPathAsync(_listingFormSelectors.LocationByXPath);
-                    await _settings.DelayBetweenActionsAsync();
-                    _logger.LogInformation($"Selector {_listingFormSelectors.LocationByXPath} is looking for...");
-
-                    if (inputElement != null)
-                    {
-                        _logger.LogInformation($"LocationByXPath selector {_listingFormSelectors.LocationByXPath} found!");
-                    }
+                    _logger.LogError("Failed to locate input element for location.");
+                    return;
                 }
+
+                _logger.LogInformation($"Found location input element by XPath: {_listingFormSelectors.LocationByXPath}");
 
                 await _settings.DelayBetweenActionsAsync();
                 await inputElement.ClickAsync();
                 await inputElement.TypeTextLikeHumanAsync(location);
-
                 await _settings.DelayBetweenActionsAsync();
 
-                var element = await _page.FindElementAsync(_listingFormSelectors.DropDownLocationsByCss);
-
-                while (element == null)
+                const int maxAttempts = 3;
+                for (int attempt = 1; attempt <= maxAttempts; attempt++)
                 {
-                    element = await _page.FindElementAsync(_listingFormSelectors.DropDownLocationsByCss);
-                    await _settings.DelayBetweenActionsAsync();
-                    _logger.LogInformation($"Selector {_listingFormSelectors.DropDownLocationsByCss} is looking for...");
-
-                    if (element != null)
+                    try
                     {
-                        _logger.LogInformation($"DropDownLocationsByCss selector {_listingFormSelectors.DropDownLocationsByCss} found!");
+                        var dropdownElement = await _page.FindElementAsync(_listingFormSelectors.DropDownLocationsByCss);
+
+                        if (dropdownElement != null)
+                        {
+                            await dropdownElement.ClickAsync();
+                            _logger.LogInformation($"Location '{location}' was selected.");
+                            return;
+                        }
+
+                        _logger.LogInformation($"Attempt {attempt}: Dropdown not found yet: {_listingFormSelectors.DropDownLocationsByCss}");
                     }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning("Attempt {Attempt}: Error while trying to click dropdown: {Message}", attempt, ex.Message);
+                    }
+
+                    await _settings.DelayBetweenActionsAsync();
                 }
 
-                await _settings.DelayBetweenActionsAsync();
-                await element.ClickAsync();
-                _logger.LogInformation($"Location {location} was selected.");
+                _logger.LogError($"Failed to select location '{location}' after {maxAttempts} attempts.");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError("Unhandled exception in AddLocationAsync: {Message}", ex.Message);
             }
         }
 
@@ -1292,7 +1364,7 @@ namespace FBMarketBot.FillingListingForm
                 _logger.LogInformation("Click 'Create New Listing'.");
                 await _settings.DelayBetweenActionsAsync();
 
-                var itemForSaleButton = await _page.FindElementAsync(_listingFormSelectors.ItemForSaleByXPath);
+                var itemForSaleButton = await _page.WaitForXPathAsync("//span[text()='Item for sale']");
 
                 while (itemForSaleButton == null)
                 {
