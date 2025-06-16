@@ -1,5 +1,11 @@
 ﻿using PuppeteerSharp;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Globalization;
+using System;
 
 namespace FBMarketBot.BrowserAutomation
 {
@@ -9,6 +15,7 @@ namespace FBMarketBot.BrowserAutomation
     public class PuppeteerElement : IPageElement
     {
         private readonly IElementHandle _elementHandle;
+        private readonly Random _random = new Random();
 
         /// <summary>
         /// Initializes a new instance of the PuppeteerElement class.
@@ -25,7 +32,9 @@ namespace FBMarketBot.BrowserAutomation
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task ClickAsync()
         {
+            await Task.Delay(_random.Next(500, 1500));
             await _elementHandle.ClickAsync();
+            await Task.Delay(_random.Next(500, 1500));
         }
 
         /// <summary>
@@ -35,7 +44,15 @@ namespace FBMarketBot.BrowserAutomation
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task TypeAsync(string text)
         {
-            await _elementHandle.TypeAsync(text);
+            await Task.Delay(_random.Next(500, 1500));
+            
+            foreach (char c in text)
+            {
+                await _elementHandle.TypeAsync(c.ToString());
+                await Task.Delay(_random.Next(50, 200));
+            }
+            
+            await Task.Delay(_random.Next(500, 1500));
         }
 
         /// <summary>

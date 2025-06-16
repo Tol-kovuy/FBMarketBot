@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System;
 
 namespace FBMarketBot.BrowserAutomation
 {
@@ -16,6 +17,7 @@ namespace FBMarketBot.BrowserAutomation
         private IPage _page;
         private readonly IGoLoginApiService _goLoginApiService;
         private readonly ILogger<PuppeteerBrowser> _logger;
+        private readonly Random _random = new Random();
 
         public PuppeteerBrowser(
             IApplicationSettingsAccessor settings,
@@ -54,6 +56,7 @@ namespace FBMarketBot.BrowserAutomation
         public async Task GoToAsync(string url)
         {
             await _page.GoToAsync(url);
+            await SimulateMouseMovementAsync();
         }
 
         /// <summary>
@@ -160,7 +163,32 @@ namespace FBMarketBot.BrowserAutomation
                 return null;
             }
 
+            await SimulateMouseMovementAsync();
             return element;
+        }
+
+        private async Task SimulateMouseMovementAsync()
+        {
+            if (_page == null)
+            {
+                return;
+            }
+
+                try
+                {
+                var viewport = await _page.EvaluateFunctionAsync<dynamic>("() => ({ width: window.innerWidth, height: window.innerHeight })");
+                
+                var x = _random.Next(0, (int)viewport.width);
+                var y = _random.Next(0, (int)viewport.height);
+                
+                await _page.Mouse.MoveAsync(x, y);
+                
+                await Task.Delay(_random.Next(1000, 3000));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning($"Error during mouse movement simulation: {ex.Message}");
+            }
         }
     }
 }

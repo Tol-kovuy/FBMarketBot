@@ -11,6 +11,7 @@ namespace FBMarketBot.ListngDataService
     public class ListingDataService : IListingDataService
     {
         private readonly ILogger _logger;
+        private readonly Random _random = new Random();
 
         public ListingDataService(
             ILogger<IListingDataService> logger
@@ -36,20 +37,27 @@ namespace FBMarketBot.ListngDataService
             var unpostedIndexes = allListings
                 .Select((title, index) => new { title, index })
                 .Where(x => !postedListings.Contains(x.title))
-                .Select(x => x.index.ToString())
                 .ToList();
 
             if (unpostedIndexes.Count > 0)
             {
-                return unpostedIndexes;
+                var shuffledListings = unpostedIndexes.OrderBy(x => _random.Next()).ToList();
+                _logger.LogInformation($"Found {shuffledListings.Count} unposted listings for profile {profileId}");
+                
+                return shuffledListings
+                    .Select(x => x.index.ToString())
+                    .ToList();
             }
 
             File.WriteAllText(profileFile, string.Empty);
-            _logger.LogInformation($"All listings have been posted for profile {profileId}. Resetting file.");
+            _logger.LogInformation($"All listings have been posted for profile {profileId}. Resetting file and shuffling all listings.");
 
-            return allListings
+            var allIndexes = allListings
                 .Select((title, index) => index.ToString())
+                .OrderBy(rnd => _random.Next())
                 .ToList();
+
+            return allIndexes;
         }
 
         public void SavePostedListingByProfile(Profile profile)
